@@ -1,21 +1,7 @@
 import requests
-from flask import send_from_directory, make_response,Blueprint
-from flask import Flask, request, jsonify
-from sqlalchemy import Column, String, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import timedelta, datetime
-import jwt
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from flask_cors import CORS
-
+from flask import send_from_directory
 from data_sheet import Data, Down, session
-from id import len_list, cont_down_up, get_cont_down, get_cont_down_list, del_cont_down_list
-
-cont = 0
-id = 0
-cont_down = 0
-cont_down_list = []
+from id import len_list, cont_down_up, get_cont_down, get_cont_down_list, del_cont_down_list, get_cont
 
 
 #通过spider完成信息爬取和歌曲下载
@@ -53,7 +39,7 @@ class Spider:
             global cont
             result = session.query(Data).filter(Data.rid == song_rid).first()
             if result is None:
-                Newsong = Data(id=cont, rid=song_rid, fav=0, duration=song_t, album=song_album,
+                Newsong = Data(id=get_cont(), rid=song_rid, fav=0, duration=song_t, album=song_album,
                             artist=song_artist, name=song_name, down=0
                             )
                 session.add(Newsong)

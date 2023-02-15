@@ -3,6 +3,10 @@ id = 0
 cont_down = 0
 cont_down_list = []
 
+def get_cont():
+    global cont
+    return cont
+
 def id_up():
     global id
     id += 1

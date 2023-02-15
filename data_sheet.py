@@ -1,16 +1,8 @@
-
-from sqlalchemy import Column, String, Integer, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-import requests
-from flask import send_from_directory, make_response
-from flask import Flask, request, jsonify
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import timedelta, datetime
-import jwt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from flask_cors import CORS
+
 
 engine = create_engine("mysql+pymysql://root:root@localhost:3306/song_message", echo=True)
 Session = sessionmaker(bind=engine)
@@ -35,11 +27,13 @@ class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
+    password = Column(String(20))
 
     def __repr__(self):
         ID = self.id
         NAME = self.name
-        return f"User: id: {ID}, name:{NAME} "
+        PASSWORD = self.password
+        return f"User: id: {ID}, name:{NAME},password:{PASSWORD} "
 
 
 class Data(Base):
