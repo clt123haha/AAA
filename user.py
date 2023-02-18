@@ -26,8 +26,8 @@ def enroll():
                 session.commit()
                 return jsonify(dict(token_type="bearer", code=200, message="success",
                                     data={"id": get_id(), "username": username}))
-            return jsonify(dict(message="该账号已被注册"))
-        return jsonify(dict(message="请重新输入"))
+            return jsonify(dict(code=403,message="该账号已被注册"))
+        return jsonify(dict(code=403,message="请重新输入"))
     except Exception as e:
         print(e)
 
@@ -40,7 +40,7 @@ def login():
     password = my_json.get("password")
     result = session.query(User).filter(User.name==username).filter(User.password==password).first()
     if result is None:
-        return jsonify(dict(message="信息错误"))
+        return jsonify(dict(code=403,message="信息错误"))
     try:
         access_token_expires = timedelta(minutes=60)
         expire = datetime.utcnow() + access_token_expires
